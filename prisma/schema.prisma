@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model categories {
+  id           Int        @id @default(autoincrement())
+  categoryName String     @unique @db.VarChar(100)
+  products     products[]
+
+  @@index([categoryName])
+}
+
+model products {
+  asin              String     @id @db.VarChar(100)
+  title             String     @db.VarChar(1000)
+  imgUrl            String     @db.VarChar(1000)
+  productURL        String     @db.VarChar(1000)
+  stars             Float?
+  reviews           Int?
+  price             Float?
+  listPrice         Float?
+  isBestSeller      Boolean    @default(false)
+  boughtInLastMonth Int?
+  categoryId        Int
+  categories        categories @relation(fields: [categoryId], references: [id])
+
+  @@index([boughtInLastMonth])
+  @@index([categoryId])
+  @@index([categoryId, isBestSeller])
+  @@index([categoryId, price])
+  @@index([categoryId, stars])
+  @@index([isBestSeller])
+  @@index([price])
+  @@index([reviews])
+  @@index([stars])
+  @@index([title])
+}
