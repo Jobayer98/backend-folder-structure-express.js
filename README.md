@@ -49,4 +49,12 @@ src/
 ├── prisma/
 ├── tests/
 └── types/
+
+
+modules/catalog/
+├── catalog.service.ts      ← business logic
+├── catalog.repository.ts   ← DB access (tenant-safe)
+├── catalog.model.ts        ← DTOs / interfaces
+└── index.ts
+
 ```
